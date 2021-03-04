@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: apicurioregistry-ingress
+  namespace: applications
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - host: apicurioro.satrack-test.net
+    http:
+      paths:
+      - backend:
+          serviceName: apicurio-registry-operator-metrics
+          servicePort: 80
+        path: /(.*)
+  
